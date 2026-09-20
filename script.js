@@ -25,7 +25,7 @@ const seeds = [
   {
     name: "开发者寄语",
     body: "我没事做着玩哈哈哈",
-    time: "2026-09-10 21:18",
+    time: "2026-09-20 23:26",
   },
 ];
 
@@ -76,17 +76,22 @@ function loadMessages() {
     if (!Array.isArray(parsed) || !parsed.length) return seeds;
     return parsed.map((item) => {
       if (!item) return item;
-      if (item.name === "班长" || item.name === "开发者小陈") {
-        const oldSeed = "欢迎随时在这里留下想说的话";
-        return {
-          ...item,
-          name: "开发者寄语",
-          body: String(item.body || "").includes(oldSeed)
-            ? "我没事做着玩哈哈哈"
-            : item.body,
-        };
-      }
-      return item;
+      const oldSeed = "欢迎随时在这里留下想说的话";
+      const isDevNote =
+        item.name === "班长" ||
+        item.name === "开发者小陈" ||
+        item.name === "开发者寄语";
+      if (!isDevNote) return item;
+      const body = String(item.body || "").includes(oldSeed)
+        ? "我没事做着玩哈哈哈"
+        : item.body;
+      return {
+        ...item,
+        name: "开发者寄语",
+        body,
+        time:
+          body === "我没事做着玩哈哈哈" ? "2026-09-20 23:26" : item.time,
+      };
     });
   } catch {
     return seeds;
