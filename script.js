@@ -7,7 +7,7 @@ const GROUP_MAP = {
   研班: "研班",
 };
 
-const PHOTO = "assets/advisor.png";
+const PHOTO = "assets/teacher-advisor.png";
 const YANBAN_PHOTO = "assets/yanban.jpg";
 const ADVISOR_INTRO =
   "大家好，我是社会学院 2602 班的教师班主任。课堂上，我希望带大家把理论读扎实、把调查方法用起来；课后也欢迎随时来聊读书、研究和生活里的困惑。社会学最动人的地方，是看见人、理解结构。期待和同学们一起在喻园求是、共情、同行。";
@@ -44,7 +44,7 @@ const defaultPeople = [
     group: "辅导员",
     role: "辅导员",
     name: "辅导员",
-    photo: PHOTO,
+    photo: "",
     intro: COUNSELOR_INTRO,
     locked: true,
   },
@@ -196,14 +196,19 @@ function allPeople() {
 }
 
 function personCard(person) {
-  const photo = person.photo || "assets/sociology-emblem.png";
-  const photoClass = photo.includes("yanban") ? "person-photo person-photo--portrait" : "person-photo";
+  const photo = person.photo || "";
+  const photoClass = /yanban|teacher-advisor/.test(photo)
+    ? "person-photo person-photo--portrait"
+    : "person-photo";
+  const photoHtml = photo
+    ? `<img class="${photoClass}" src="${escapeHtml(photo)}" alt="${escapeHtml(person.name)}" />`
+    : `<div class="person-photo person-photo--empty" aria-hidden="true"></div>`;
   const remove = person.locked
     ? ""
     : `<button class="person-remove" type="button" data-remove="${escapeHtml(person.id)}">移除</button>`;
   return `
     <article class="person-card">
-      <img class="${photoClass}" src="${escapeHtml(photo)}" alt="${escapeHtml(person.name)}" />
+      ${photoHtml}
       <p class="person-role">2602 · ${escapeHtml(person.role || person.group)}</p>
       <h4>${escapeHtml(person.name)}</h4>
       <p>${escapeHtml(person.intro)}</p>

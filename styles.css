@@ -231,7 +231,10 @@ img { max-width: 100%; display: block; }
   background: #ddd;
 }
 .person-photo--portrait {
-  object-position: center 30%;
+  object-position: center 22%;
+}
+.person-photo--empty {
+  background: #ece7e2;
 }
 .person-card .person-role,
 .person-card h4,
