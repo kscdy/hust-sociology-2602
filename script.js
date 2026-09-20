@@ -24,7 +24,7 @@ const seeds = [
   },
   {
     name: "开发者寄语",
-    body: "我没事做着玩哈哈哈",
+    body: "我没事做着玩哈哈哈（其实发给我了）",
     time: "2026-09-20 23:26",
   },
 ];
@@ -90,15 +90,18 @@ function loadMessages() {
         item.name === "开发者小陈" ||
         item.name === "开发者寄语";
       if (!isDevNote) return item;
-      const body = String(item.body || "").includes(oldSeed)
-        ? "我没事做着玩哈哈哈"
-        : item.body;
+      const joke = "我没事做着玩哈哈哈（其实发给我了）";
+      const body =
+        String(item.body || "").includes(oldSeed) ||
+        item.body === "我没事做着玩哈哈哈" ||
+        item.body === joke
+          ? joke
+          : item.body;
       return {
         ...item,
         name: "开发者寄语",
         body,
-        time:
-          body === "我没事做着玩哈哈哈" ? "2026-09-20 23:26" : item.time,
+        time: body === joke ? "2026-09-20 23:26" : item.time,
       };
     });
   } catch {
