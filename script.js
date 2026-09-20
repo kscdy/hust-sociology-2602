@@ -36,6 +36,8 @@ const officers = [
   { role: "宣传委员", name: "XXX" },
   { role: "组织委员", name: "XXX" },
 ];
+
+const defaultPeople = [
   {
     id: "as-teacher-advisor",
     group: "教师班主任",
