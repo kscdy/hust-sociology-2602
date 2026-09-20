@@ -23,8 +23,8 @@ const seeds = [
     time: "2026-09-01 09:00",
   },
   {
-    name: "开发者小陈",
-    body: "欢迎随时在这里留下想说的话。班级的故事，也从一句问候开始。",
+    name: "开发者寄语",
+    body: "我没事做着玩哈哈哈",
     time: "2026-09-10 21:18",
   },
 ];
@@ -74,9 +74,20 @@ function loadMessages() {
     if (!raw) return seeds;
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed) || !parsed.length) return seeds;
-    return parsed.map((item) =>
-      item && item.name === "班长" ? { ...item, name: "开发者小陈" } : item
-    );
+    return parsed.map((item) => {
+      if (!item) return item;
+      if (item.name === "班长" || item.name === "开发者小陈") {
+        const oldSeed = "欢迎随时在这里留下想说的话";
+        return {
+          ...item,
+          name: "开发者寄语",
+          body: String(item.body || "").includes(oldSeed)
+            ? "我没事做着玩哈哈哈"
+            : item.body,
+        };
+      }
+      return item;
+    });
   } catch {
     return seeds;
   }
