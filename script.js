@@ -8,6 +8,7 @@ const GROUP_MAP = {
 };
 
 const PHOTO = "assets/advisor.png";
+const YANBAN_PHOTO = "assets/yanban.jpg";
 const ADVISOR_INTRO =
   "大家好，我是社会学院 2602 班的教师班主任。课堂上，我希望带大家把理论读扎实、把调查方法用起来；课后也欢迎随时来聊读书、研究和生活里的困惑。社会学最动人的地方，是看见人、理解结构。期待和同学们一起在喻园求是、共情、同行。";
 const COUNSELOR_INTRO =
@@ -52,7 +53,7 @@ const defaultPeople = [
     group: "研班",
     role: "研班",
     name: "研班",
-    photo: PHOTO,
+    photo: YANBAN_PHOTO,
     intro: YANBAN_INTRO,
     locked: true,
   },
@@ -196,12 +197,13 @@ function allPeople() {
 
 function personCard(person) {
   const photo = person.photo || "assets/sociology-emblem.png";
+  const photoClass = photo.includes("yanban") ? "person-photo person-photo--portrait" : "person-photo";
   const remove = person.locked
     ? ""
     : `<button class="person-remove" type="button" data-remove="${escapeHtml(person.id)}">移除</button>`;
   return `
     <article class="person-card">
-      <img class="person-photo" src="${escapeHtml(photo)}" alt="${escapeHtml(person.name)}" />
+      <img class="${photoClass}" src="${escapeHtml(photo)}" alt="${escapeHtml(person.name)}" />
       <p class="person-role">2602 · ${escapeHtml(person.role || person.group)}</p>
       <h4>${escapeHtml(person.name)}</h4>
       <p>${escapeHtml(person.intro)}</p>
