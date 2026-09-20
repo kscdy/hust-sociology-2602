@@ -115,16 +115,55 @@ const form = document.getElementById("message-form");
 let messages = loadMessages();
 render(messages);
 
-form.addEventListener("submit", (event) => {
+const MAIL_ENDPOINT = "https://formsubmit.co/ajax/2078638831@qq.com";
+
+async function sendToEmail(name, body) {
+  const response = await fetch(MAIL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      message: body,
+      _subject: "华科社会学院2602班网页留言",
+    }),
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || result.success === "false") {
+    throw new Error(result.message || "邮件发送失败");
+  }
+}
+
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(form);
   const name = String(data.get("name") || "").trim();
   const body = String(data.get("body") || "").trim();
   if (!name || !body) return;
-  messages.push({ name, body, time: formatNow() });
-  saveMessages(messages);
-  render(messages);
-  form.reset();
+  const button = form.querySelector('button[type="submit"]');
+  const original = button ? button.textContent : "";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "发送中…";
+  }
+  try {
+    await sendToEmail(name, body);
+    messages.push({ name, body, time: formatNow() });
+    saveMessages(messages);
+    render(messages);
+    form.reset();
+    if (button) button.textContent = "已发到邮箱";
+  } catch {
+    if (button) button.textContent = "发送失败，请再试";
+  }
+  window.setTimeout(() => {
+    if (button) {
+      button.disabled = false;
+      button.textContent = original || "提交留言";
+    }
+  }, 2200);
 });
 
 function loadExtraPeople() {
