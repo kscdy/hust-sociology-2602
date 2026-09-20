@@ -29,7 +29,13 @@ const seeds = [
   },
 ];
 
-const defaultPeople = [
+const officers = [
+  { role: "班长", name: "XXX" },
+  { role: "团支书", name: "XXX" },
+  { role: "学委", name: "XXX" },
+  { role: "宣传委员", name: "XXX" },
+  { role: "组织委员", name: "XXX" },
+];
   {
     id: "as-teacher-advisor",
     group: "教师班主任",
@@ -232,12 +238,21 @@ function personCard(person) {
     </article>`;
 }
 
+function officerCard(person) {
+  return `
+    <article class="officer-card">
+      <p class="person-role">2602 · ${escapeHtml(person.role)}</p>
+      <h4>${escapeHtml(person.name)}</h4>
+    </article>`;
+}
+
 function renderPeople() {
   const board = document.getElementById("people-board");
   const people = allPeople();
-  board.innerHTML = people.length
+  const main = people.length
     ? `<div class="people-grid">${people.map(personCard).join("")}</div>`
     : `<p class="message-empty">这一栏还空着，可以点下方补充照片和自我介绍。</p>`;
+  board.innerHTML = `${main}<div class="officer-grid">${officers.map(officerCard).join("")}</div>`;
 }
 
 function readPhoto(file) {

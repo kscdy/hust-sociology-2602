@@ -219,6 +219,29 @@ img { max-width: 100%; display: block; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+.officer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+.officer-card {
+  background: #fff;
+  border-bottom: 2px solid var(--red);
+  padding: 12px 10px 14px;
+  text-align: center;
+}
+.officer-card .person-role {
+  margin: 0 0 4px;
+  padding: 0;
+  font-size: 11px;
+}
+.officer-card h4 {
+  font-family: "Noto Serif SC", serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
 .person-card {
   background: #fff;
   border-bottom: 3px solid var(--red);
@@ -343,6 +366,7 @@ footer img {
 @media (max-width: 900px) {
   .site-header nav { display: none; }
   .data-bar, .split, .motto-grid, .people-grid, .people-form { grid-template-columns: 1fr; }
+  .officer-grid { grid-template-columns: 1fr 1fr; }
   .hero { min-height: 60vh; }
   .person-photo { height: 220px; }
 }
