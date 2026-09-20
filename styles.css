@@ -46,11 +46,12 @@ img { max-width: 100%; display: block; }
   gap: 12px;
 }
 .brand img {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #fff;
+  width: 56px;
+  height: 56px;
+  max-width: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: transparent;
 }
 .brand strong {
   display: block;
@@ -329,9 +330,10 @@ footer {
 footer img {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  background: #fff;
-  object-fit: cover;
+  max-width: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: transparent;
 }
 
 @media (max-width: 900px) {
